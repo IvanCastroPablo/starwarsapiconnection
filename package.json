@@ -1,0 +1,20 @@
+{
+  "name": "starwarsapiconnection",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:backend": "cd frontend && nodemon app.js",
+    "start:frontend": "cd frontend && VITE_PORT=5174",
+    "start": "sudo sysctl fs.notify.max_user_watches=600000 && npm run start:backend && npm run start:frontend"
+  },
+  "keywords": [],
+  "author": "ivan castro",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "pg": "^8.13.3",
+    "sequelize-cli": "^6.6.2"
+  }
+}
