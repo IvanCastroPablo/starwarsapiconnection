@@ -5,19 +5,20 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:backend": "cd frontend && nodemon app.js",
+    "start:backend": "cd backend && nodemon app.js",
     "start:frontend": "cd frontend && VITE_PORT=5174",
-    "start": "sudo sysctl fs.notify.max_user_watches=600000 && npm run start:backend && npm run start:frontend"
+    "start": "npm run start:backend && npm run start:frontend"
   },
   "keywords": [],
   "author": "ivan castro",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "nodemon": "^3.1.9",
     "pg": "^8.13.3",
     "react-router-dom": "^7.2.0",
-    "sequelize-cli": "^6.6.2",
     "vite": "^6.2.0"
   }
 }
