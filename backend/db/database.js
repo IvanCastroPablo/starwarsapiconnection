@@ -10,3 +10,6 @@ const pool = new Pool({
 });
 
 module.exports = pool;
+
+
+console.log("DB_USER:", process.env.DB_USER);
