@@ -1,68 +1,104 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: "StarJedi";
+  src: url("./assets/fonts/SfDistantGalaxy-0l3d.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  text-transform: uppercase;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+html, body {
+  overflow: hidden;
 }
 
 body {
+  font-family: "StarJedi", sans-serif !important;
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+  background: url("/background.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+.container {
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 300px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  border-right: none;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  justify-content: center;
+  align-items: center; /* Centrar verticalmente */
+  text-align: center;
+  font-size: xx-large;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  text-shadow: 3px 3px 10px yellow, -3px -3px 10px orange;
+  letter-spacing: 2px; /* Efecto de brillo */
+  font-size: xx-large;
+  transform: translateX(-70px);
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+h2 {
+  font-size: x-large;
+  transform: translateX(15px);
+  text-shadow: 3px 3px 10px yellow, -3px -3px 10px orange;
+  letter-spacing: 2px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+p {
+  color: white;
+  font-size: 18px; /* Puedes ajustar el tamaño según lo necesites */
+}
+
+.sidebar input {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 20px; /* Bordes redondeados */
+  background-color: rgba(255, 255, 255, 0.3); /* Translúcido */
+  color: white;
+  outline: none;
+  text-align: center;
+  font-size: 16px;
+  transform: translateX(10px);
+}
+
+ul {
+  line-height: none; /* Aumenta el interlineado */
+  list-style: none; /* Elimina los círculos predeterminados */
+  padding-left: 0; /* Opcional: elimina el padding izquierdo si es necesario */
+}
+
+ul li {
+  margin-bottom: 20px; /* Aumenta el espacio entre elementos */
+}
+
+ul li::before {
+  content: "-"; /* Agrega una estrella antes de cada ítem */
+  margin-right: 8px; /* Espaciado entre la estrella y el texto */
+}
+
+#selectmovie {
+  color: #ffcc00; /* Amarillo suave para destacar */
+  font-style: italic;
+  text-align: center;
+}
+
+#selected-movie {
+  font-size: x-large; /* Aumenta ligeramente el tamaño del texto */
+  margin-top: 50px; /* Empuja el contenido hacia abajo */
 }

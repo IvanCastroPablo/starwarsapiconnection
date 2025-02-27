@@ -6,6 +6,8 @@ const path = require("path");
 const logging = require("./routers/logging");
 const app = express();
 
+app.use(express.json());
+
 // importaciones database
 const { initDb } = require("./db/initDb"); // <-- por si no existía previamente
 const pool = require("./db/database"); // <-- si ya existe
