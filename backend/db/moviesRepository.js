@@ -1,38 +1,27 @@
 const pool = require("./database");
 
 async function addMovie({ imdbID, title, year, plot }) {
-  const query = `
-    INSERT INTO movies (imdbID, title, year, plot)
-    VALUES ($1, $2, $3, $4)
-    ON CONFLICT (imdbID) DO NOTHING;
-  `;
-  await pool.query(query, [imdbID, title, year, plot]);
-}
+  await pool.query(
+      "INSERT INTO movies (imdbID, title, year, plot) VALUES ($1, $2, $3, $4) ON CONFLICT (imdbID) DO NOTHING",
+      [imdbID, title, year, plot]
+  );
 
-async function getMovies({ title, year, imdbID }) {
-  let query = "SELECT * FROM movies WHERE 1=1";
-  const values = [];
-  let index = 1;
+  // Esperar medio segundo antes de consultar
+  await new Promise((resolve) => setTimeout(resolve, 500));
 
-  if (title) {
-    query += ` AND title ILIKE $${index}`;
-    values.push(`%${title}%`);
-    index++;
-  }
-  if (year) {
-    query += ` AND year = $${index}`;
-    values.push(year);
-    index++;
-  }
-
-  if (imdbID) {
-    query += ` AND imdbID = $${index}`;
-    values.push(imdbID);
-    index++;
-  }
-
-  const { rows } = await pool.query(query, values);
+  const { rows } = await pool.query("SELECT * FROM movies");
   return rows;
 }
 
-module.exports = { addMovie, getMovies };
+async function getMovies() {
+  const { rows } = await pool.query("SELECT * FROM movies");
+  return rows;
+}
+
+
+async function removeMovie(imdbID) {
+  const query = "DELETE FROM movies WHERE imdbID = $1;";
+  await pool.query(query, [imdbID]);
+}
+
+module.exports = { addMovie, getMovies, removeMovie };

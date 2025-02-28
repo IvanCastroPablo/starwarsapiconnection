@@ -17,6 +17,7 @@ async function initDb() {
     // Verificar si la base de datos existe
     const dbExists = await adminPool.query(`SELECT 1 FROM pg_database WHERE datname = $1`, [dbName]);
 
+    // y si no...
     if (dbExists.rowCount === 0) {
       console.log(`Creating ${dbName}...`);
       await adminPool.query(`CREATE DATABASE "${dbName}"`);
@@ -25,7 +26,6 @@ async function initDb() {
     // Cerrar conexión administrativa
     await adminPool.end();
 
-    // Ahora nos conectamos a la base de datos recién creada
     const pool = new Pool({
       user: process.env.DB_USER,
       host: process.env.DB_HOST,

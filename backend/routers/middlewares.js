@@ -65,12 +65,25 @@ router.post("/movies", async (req, res) => {
 // ruta para obtener todas las pelis guardadas en la base de datos
 router.get("/saved-movies", async (req, res) => {
     try {
-        const movies = await moviesRepository.getMovies({});
-        res.json(movies);
+      const movies = await moviesRepository.getMovies({});
+
+      res.json(movies || []);
     } catch (error) {
-        res.status(500).json({ error: "Error fetching saved movies", details: error.message });
+      console.error("Error en saved-movies:", error);
+      res.status(500).json({ error: "Error fetching saved movies", details: error.message });
+    }
+  });
+
+// para eliminar una peli de la base de datos
+router.delete("/movies", async (req, res) => {
+    const { imdbID } = req.body;
+
+    try {
+        await moviesRepository.removeMovie(imdbID);
+        res.json({ message: "Movie deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ error: "Error deleting movie", details: error.message });
     }
 });
 
-// exporto el router...
 module.exports = router;

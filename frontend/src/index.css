@@ -39,14 +39,14 @@ body {
   flex: 1;
   padding: 20px;
   justify-content: center;
-  align-items: center; /* Centrar verticalmente */
+  align-items: center;
   text-align: center;
   font-size: xx-large;
 }
 
 h1 {
   text-shadow: 3px 3px 10px yellow, -3px -3px 10px orange;
-  letter-spacing: 2px; /* Efecto de brillo */
+  letter-spacing: 2px;
   font-size: xx-large;
   transform: translateX(-70px);
 }
@@ -60,7 +60,7 @@ h2 {
 
 p {
   color: white;
-  font-size: 18px; /* Puedes ajustar el tamaño según lo necesites */
+  font-size: 18px;
 }
 
 .sidebar input {
@@ -68,37 +68,64 @@ p {
   padding: 10px;
   margin: 10px 0;
   border: none;
-  border-radius: 20px; /* Bordes redondeados */
-  background-color: rgba(255, 255, 255, 0.3); /* Translúcido */
+  background-color: rgba(255, 255, 255, 0.3);
   color: white;
   outline: none;
   text-align: center;
   font-size: 16px;
-  transform: translateX(10px);
 }
 
 ul {
-  line-height: none; /* Aumenta el interlineado */
-  list-style: none; /* Elimina los círculos predeterminados */
-  padding-left: 0; /* Opcional: elimina el padding izquierdo si es necesario */
+  line-height: none;
+  list-style: none;
+  padding-left: 0;
 }
 
 ul li {
-  margin-bottom: 20px; /* Aumenta el espacio entre elementos */
+  margin-bottom: 20px;
 }
 
 ul li::before {
-  content: "-"; /* Agrega una estrella antes de cada ítem */
-  margin-right: 8px; /* Espaciado entre la estrella y el texto */
+  content: "-";
 }
 
 #selectmovie {
-  color: #ffcc00; /* Amarillo suave para destacar */
+  color: #ffcc00;
   font-style: italic;
   text-align: center;
 }
 
 #selected-movie {
-  font-size: x-large; /* Aumenta ligeramente el tamaño del texto */
-  margin-top: 50px; /* Empuja el contenido hacia abajo */
+  margin-top: 50px;
+}
+
+.control {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  margin: 5px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.control:hover {
+  background-color: #0056b3;
+}
+
+.control[type="text"] {
+  background-color: white;
+  color: rgb(255, 255, 255);
+  border: 1px solid #ccc;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 5px;
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.3);
+  width: 80%;
 }
