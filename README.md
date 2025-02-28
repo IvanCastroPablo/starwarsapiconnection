@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img src="https://i.postimg.cc/7YXRjz67/Screenshot-from-2025-02-28-21-46-12.png" alt="Imagen del proyecto" />
+  <img src="https://i.imgur.com/WO7VBOY.png" alt="Imagen del proyecto" />
 </p>
 
 
