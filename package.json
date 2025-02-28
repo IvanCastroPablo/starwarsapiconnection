@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "postinstall": "npm --prefix frontend install",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:backend": "cd backend && nodemon app.js",
     "start:frontend": "cd frontend && vite preview",
     "build:frontend": "cd frontend && vite build",
-    "start": "npm run start:backend && npm run start:frontend"
+    "start": "npm run build:frontend && concurrently \"npm run start:backend\" \"npm run start:frontend\""
   },
   "keywords": [],
   "author": "ivan castro",
@@ -21,5 +22,8 @@
     "pg": "^8.13.3",
     "react-router-dom": "^7.2.0",
     "vite": "^6.2.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
   }
 }

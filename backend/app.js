@@ -39,7 +39,7 @@ initDb().then(() => {
         console.log("Database connection: success.");
     
         const PORT = process.env.PORT || 3000;
-        const url = "http://localhost:3000/dashboard";
+        const url = "http://localhost:3000/movies";
     
         app.listen(PORT, () => {
           console.log(

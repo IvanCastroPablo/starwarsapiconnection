@@ -1,96 +1,142 @@
-starwarsapiconnection!
+<p align="center">
+  <h1>Starwars API Connection</h1>
+</p>
 
-He resuelto este problema sirviéndome de la documentación que nos dieron a lo largo del curso. He enfrentado los típicos problemas (o ya me han ocurrido dos veces seguidas, así que estimo que serán típicos), como por ejemplo tener que haber hecho modificaciones en postgres:
+<p align="center">
+  <img src="https://i.postimg.cc/7YXRjz67/Screenshot-from-2025-02-28-21-46-12.png" alt="Imagen del proyecto" />
+</p>
 
-Modificaciones en PostgreSQL
- Cambio del método de autenticación
 
-PostgreSQL estaba configurado para usar autenticación peer, lo que impedía la conexión con contraseña.
-Se modificó el archivo pg_hba.conf para cambiar peer por md5, permitiendo autenticación con contraseña.
- Actualización de la contraseña del usuario postgres
+Una aplicación que se conecta con OMDB API para obtener todas las películas de Star Wars y almacenarlas (y eliminarlas) en una base de datos local y persistente. He resuelto esta prueba sirviéndome de la documentación y experiencia obtenida en el curso de Albañiles Digitales.
 
-Se estableció una nueva contraseña con:
-sql
-Copy
-Edit
+# Ejecución del proyecto
+
+## 1. Clonar este repositorio
+
+```bash
+git clone https://github.com/IvanCastroPablo/starwarsapiconnection
+cd starwarsapiconnection
+```
+
+## 2. Instalar las dependencias
+
+Asegúrate de tener Node.js y npm instalados en tu máquina. Luego, ejecuta:
+
+```bash
+npm install
+```
+
+## 3. Iniciar el backend y el frontend
+
+Este proyecto tiene dos partes: el backend y el frontend. Puedes iniciar ambos con el siguiente comando:
+
+```bash
+npm start
+```
+
+Esto ejecutará ambos servidores:
+
+- **Backend**: El servidor de Express se ejecutará con `nodemon` en el directorio backend, escuchando en el puerto por defecto.
+- **Frontend**: El frontend se ejecutará usando el build de Vite en el directorio frontend con `vite preview`.
+
+## 4. Modificación de postgres (es posible que lo necesites)
+
+
+
+Durante el desarrollo, enfrenté problemas con la autenticación en PostgreSQL, lo que requirió algunas modificaciones (modificaciones que es posible que tú también tengas que hacer para que la aplicación funcione apropiadamente):
+
+### Cambio del método de autenticación
+
+PostgreSQL estaba configurado para usar autenticación `peer`, lo que impedía la conexión con contraseña. Se modificó el archivo `pg_hba.conf` para cambiar `peer` por `md5`, permitiendo autenticación con contraseña.
+
+### Actualización de la contraseña del usuario `postgres`
+
+```sql
 ALTER USER postgres WITH PASSWORD '1234';
- Reinicio del servicio PostgreSQL
+```
 
-Aplicamos los cambios reiniciando el servicio con:
-sh
-Copy
-Edit
+### Reinicio del servicio PostgreSQL
+
+```bash
 sudo systemctl restart postgresql
-Efectos de estas modificaciones
--Ahora el backend puede conectarse a la base de datos con usuario y contraseña.
--Cualquier otra conexión a PostgreSQL también requerirá autenticación con contraseña.
+```
 
+### 🔹 Efectos de estas modificaciones
 
-Algunos datos de utilidad para examinar el trabajo son:
+- Ahora el backend puede conectarse a la base de datos con usuario y contraseña.
+- Cualquier otra conexión a PostgreSQL también requerirá autenticación con contraseña.
 
-nombre de la base de datos: starwars-database
-usuario: el que viene por defecto, postgres.
-contraseña: 1234
+## 5. Ejecutar solo backend o frontend (opcional)
 
-Puedes utilizar httpie (o curl, o postman, lo que te apetezca) para examinar las llamadas y ver si todo va como es debido. Te paso algunas llamadas para facilitarte el trabajo:
+Si prefieres iniciar solo el backend o el frontend por separado, puedes usar los siguientes comandos:
 
-http localhost:3000/api/movies/tt0086190  <--- para ver los datos de una peli con un id en particular
-http localhost:3000/api/movies <--- para ver todas las pelis de star wars
-http POST localhost:3000/api/movies imdbID="tt0086190" <--- con esto metes una peli en concreto en la database
-http localhost:3000/api/saved-movies <--- así vemos las que tenemos guardadas en la base de datos
-http DELETE localhost:3000/api/movies imdbID="tt0086190" <--- como es de esperar, la borra de la database
+- **Backend**:
+  ```bash
+  npm run start:backend
+  ```
+- **Frontend (usando el build generado por Vite)**:
+  ```bash
+  npm run start:frontend
+  ```
+- **Generar el build del frontend (si aún no se ha hecho)**:
+  ```bash
+  npm run build:frontend
+  ```
 
+## 6. Visitar la aplicación
 
-He tenido bastantes dolores de cabeza con react porque frontend no es lo mío pero poco a poco voy aprendiendo a ver los errores y a leer documentación.
-
-
-Aquí tienes una sección para las instrucciones de ejecución que puedes añadir al README, utilizando el `package.json` que me proporcionaste:
+Una vez hayas ejecutado todos los pasos necesarios, la propia consola del backend te proporcionará un link para visitar la página web de la aplicación. En caso de que no lo veas o tu consola deshabilite links, simplemente visita http://localhost:3000/movies
 
 ---
 
-Ejecución del proyecto
-1. Clona este repositorio
-bash
-Copy
-Edit
-git clone <URL_del_repositorio>
-cd starwarsapiconnection
-2. Instala las dependencias
-Asegúrate de tener Node.js y npm instalados en tu máquina. Luego, ejecuta:
 
-bash
-Copy
-Edit
-npm install
-3. Inicia el backend y el frontend
-Este proyecto tiene dos partes: el backend y el frontend. Puedes iniciar ambos con el siguiente comando:
 
-bash
-Copy
-Edit
-npm run start
-Esto ejecutará ambos servidores:
+# Información de la base de datos
 
-Backend: El servidor de Express se ejecutará con nodemon en el directorio backend, escuchando en el puerto por defecto.
-Frontend: El frontend se ejecutará usando el build de Vite en el directorio frontend con el comando vite preview.
-4. Ejecutar solo backend o frontend (opcional)
-Si prefieres iniciar solo el backend o el frontend por separado, puedes usar los siguientes comandos:
+- **Nombre de la base de datos:** `starwars-database`
+- **Usuario:** `postgres` (por defecto)
+- **Contraseña:** `1234`
 
-Backend:
+---
 
-bash
-Copy
-Edit
-npm run start:backend
-Frontend (usando el build generado por Vite):
+# Endpoints de la API
 
-bash
-Copy
-Edit
-npm run start:frontend
-Generar el build del frontend (si aún no se ha hecho):
+Puedes utilizar `httpie`, `curl` o `Postman` para probar las llamadas a la API. Aquí te dejo todas las llamadas:
 
-bash
-Copy
-Edit
-npm run build:frontend
+- **Obtener detalles de una película con un ID específico:**
+  ```bash
+  http localhost:3000/api/movies/tt0086190
+  ```
+- **Obtener todas las películas de Star Wars:**
+  ```bash
+  http localhost:3000/api/movies
+  ```
+- **Agregar una película a la base de datos:**
+  ```bash
+  http POST localhost:3000/api/movies imdbID="tt0086190"
+  ```
+- **Ver las películas guardadas en la base de datos:**
+  ```bash
+  http localhost:3000/api/saved-movies
+  ```
+- **Eliminar una película de la base de datos:**
+  ```bash
+  http DELETE localhost:3000/api/movies imdbID="tt0086190"
+  ```
+
+---
+
+# Desafíos
+
+En el frontend, tuve algunos dolores de cabeza con React, ya que no es mi fuerte. Sin embargo, poco a poco fui aprendiendo a identificar errores y a leer documentación para solucionarlos.
+
+En algunos momentos, me apoyé en inteligencia artificial para resolver problemas rápidos. Sin embargo, me he dado cuenta de que cada vez que recurro a ella, mi habilidad para programar tiende a empeorar, así que he intentado depender menos de estas herramientas a medida que avanzo.
+
+---
+
+## Conclusión
+
+He dedicado bastante tiempo a esta prueba porque quería hacer las cosas bien y entender realmente cada parte del proyecto. No quería simplemente resolver el ejercicio, sino asegurarme de que comprendía lo que estaba haciendo y por qué lo estaba haciendo.
+
+Estoy muy ilusionado por participar en las prácticas, ya que representan una gran oportunidad para seguir aprendiendo y mejorar como desarrollador. Espero que este proyecto refleje mi compromiso y mis ganas de crecer en este campo. ¡Gracias por tu tiempo! 
+
