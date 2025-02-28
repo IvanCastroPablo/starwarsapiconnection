@@ -6,9 +6,6 @@ async function addMovie({ imdbID, title, year, plot }) {
       [imdbID, title, year, plot]
   );
 
-  // Esperar medio segundo antes de consultar
-  await new Promise((resolve) => setTimeout(resolve, 500));
-
   const { rows } = await pool.query("SELECT * FROM movies");
   return rows;
 }
@@ -17,7 +14,6 @@ async function getMovies() {
   const { rows } = await pool.query("SELECT * FROM movies");
   return rows;
 }
-
 
 async function removeMovie(imdbID) {
   const query = "DELETE FROM movies WHERE imdbID = $1;";

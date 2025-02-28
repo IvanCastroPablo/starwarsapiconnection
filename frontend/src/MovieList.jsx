@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
-
-const refreshMovies = () => {
-    fetch("http://localhost:3000/api/movies")
-      .then((res) => res.json())
-      .then(setMovies)
-      .catch(console.error);
-  };
+import LeftSidebar from "./LeftSidebar";
+import MovieDetails from "./MovieDetails";
+import RightSidebar from "./RightSidebar";
 
 function MovieList() {
   const [movies, setMovies] = useState([]);
   const [titleFilter, setTitleFilter] = useState("");
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [savedMovies, setSavedMovies] = useState([]);
+
+  const refreshMovies = () => {
+    fetch("http://localhost:3000/api/movies")
+      .then((res) => res.json())
+      .then(setMovies)
+      .catch(console.error);
+  };
 
   useEffect(() => {
     fetch("http://localhost:3000/api/movies")
@@ -51,7 +54,15 @@ function MovieList() {
   const refreshSavedMovies = () => {
     fetch("http://localhost:3000/api/saved-movies")
       .then((res) => res.text())
-      .then((text) => text ? JSON.parse(text) : [])
+      .then((text) => {
+        const rawData = text ? JSON.parse(text) : [];
+        return rawData.map(movie => ({
+          imdbID: movie.imdbid,
+          title: movie.title,
+          year: movie.year,
+          plot: movie.plot
+        }));
+      })
       .then(setSavedMovies)
       .catch(console.error);
   };
@@ -63,7 +74,6 @@ function MovieList() {
       .catch(console.error);
   };
 
-  // AUÍ ESTÁ EL PROBLEMA -- TO DO
   const handleSelectSavedMovie = (imdbID) => {
     console.log("ID recibido:", imdbID);
     
@@ -75,7 +85,7 @@ function MovieList() {
     if (savedMovie) {
       // Crear un objeto con la estructura correcta, independientemente de la original
       const movieToSelect = {
-        imdbID: imdbID || movie.imdbid, // AQUI!!
+        imdbID: savedMovie.imdbID,
         title: savedMovie.title,
         year: savedMovie.year,
         plot: savedMovie.plot
@@ -104,14 +114,13 @@ function MovieList() {
         }
         return res.json();
       })
-      .then((data) => {
+      .then(() => {
         refreshSavedMovies();
         refreshMovies();
       })
       .catch(console.error);
   };
   
-
   const handleRemoveMovie = () => {
     if (!selectedMovie) return;
 
@@ -137,55 +146,23 @@ function MovieList() {
 
   return (
     <div className="container">
-      <aside className="sidebar">
-        <h2>"A long time ago in a galaxy far, far away..."</h2>
-        <input
-          type="text"
-          placeholder="filter by title"
-          value={titleFilter}
-          onChange={(e) => setTitleFilter(e.target.value)}
-          className="control"
-        />
-        <ul>
-          {movies
-            .filter(({ title }) => title.toLowerCase().includes(titleFilter.toLowerCase()))
-            .map(({ imdbID, title }) => (
-              <li key={imdbID} onClick={() => handleSelectedMovie(imdbID)} style={{ cursor: "pointer" }}>
-                {title}
-              </li>
-            ))}
-        </ul>
-        <p id="selectmovie">Select one movie to see more details and add it or remove it from the database</p>
-      </aside>
-
-      <div id="selected-movie" style={{ flex: 2 }}>
-        {selectedMovie ? (
-          <div>
-            <h2>{selectedMovie.title} ({selectedMovie.year})</h2>
-            <p><strong>Plot:</strong> {selectedMovie.plot}</p>
-            <p><strong>IMDB ID:</strong> {selectedMovie.imdbID}</p>
-            <button className="control" onClick={handleAddMovie}>Add to the database</button>
-            <button className="control" onClick={handleRemoveMovie}>Remove from the database</button>
-          </div>
-        ) : (
-          <p></p>
-        )}
-      </div>
-
-      <aside className="sidebar">
-        <h2>Saved Movies</h2>
-        <ul>
-          {savedMovies.map(({ imdbID, title }) => (
-            <li 
-              key={imdbID} 
-              onClick={() => handleSelectSavedMovie(imdbID)} 
-              style={{ cursor: "pointer" }}
-            >
-              {title} ({imdbID})
-            </li>
-          ))}
-        </ul>
-      </aside>
+      <LeftSidebar 
+        movies={movies} 
+        titleFilter={titleFilter} 
+        setTitleFilter={setTitleFilter} 
+        handleSelectedMovie={handleSelectedMovie} 
+      />
+      
+      <MovieDetails 
+        selectedMovie={selectedMovie} 
+        handleAddMovie={handleAddMovie} 
+        handleRemoveMovie={handleRemoveMovie} 
+      />
+      
+      <RightSidebar 
+        savedMovies={savedMovies} 
+        handleSelectSavedMovie={handleSelectSavedMovie} 
+      />
     </div>
   );
 }

@@ -95,8 +95,27 @@ ul li::before {
   text-align: center;
 }
 
+#title {
+  text-align: center;
+  font-size: xx-large;
+}
+
+#plot {
+  font-style: italic;
+  margin-top: 60px;
+  margin-left: 100px;
+}
+
+#imdbnumber {
+  margin-left: 100px;
+}
+
 #selected-movie {
   margin-top: 50px;
+}
+
+#savedmovies {
+  transform: translateX(5px);
 }
 
 .control {
@@ -113,7 +132,7 @@ ul li::before {
 }
 
 .control:hover {
-  background-color: #0056b3;
+  background-color: #530f5c;
 }
 
 .control[type="text"] {

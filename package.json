@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:backend": "cd backend && nodemon app.js",
-    "start:frontend": "cd frontend && VITE_PORT=5174",
+    "start:frontend": "cd frontend && vite preview",
+    "build:frontend": "cd frontend && vite build",
     "start": "npm run start:backend && npm run start:frontend"
   },
   "keywords": [],
